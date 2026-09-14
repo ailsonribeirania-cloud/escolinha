@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Bell, ShieldCheck } from 'lucide-react';
 import { api, isDemo, useApp } from '../lib/app';
 import { Modal } from './ui';
+import { InstallPrompt } from './InstallPrompt';
 
 const seenKey=(userId:string)=>`push-prompt-seen:${userId}`;
 
@@ -34,7 +35,7 @@ export function PushPrompt({userId}:{userId:string}){
   }catch(error){toast(error instanceof Error?error.message:'Não foi possível habilitar as notificações.',true);}
   finally{setBusy(false);}
  };
- if(!open)return null;
+ if(!open)return <InstallPrompt/>;
  return <Modal title="Fique por perto" description="Receba um aviso discreto quando a equipe precisar falar com você." onClose={close}>
   <div className="padded">
    <div className="form-notice"><Bell size={20}/> As notificações ajudam você a chegar rapidamente quando houver um chamado.</div>

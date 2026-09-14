@@ -9,3 +9,5 @@
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .qr-scanner{margin:10px 0 18px}.qr-scanner video{width:100%;max-height:260px;border-radius:12px;background:#173c2c;margin-bottom:10px}
+
+.install-modal-icon{width:64px;height:64px;display:grid;place-items:center;margin:0 auto 17px;border-radius:18px;background:#eaf2e1;color:#4e704d}.install-steps{display:flex;flex-direction:column;gap:12px;padding-left:24px;color:#52634f;font-size:13px}.install-steps li{padding-left:3px}.install-steps svg{vertical-align:-3px;margin:0 3px;color:#4c674e}
