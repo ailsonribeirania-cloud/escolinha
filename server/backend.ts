@@ -1,0 +1,14 @@
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { randomBytes } from 'node:crypto';
+import { secret, hash, encrypt, decrypt } from './security.js';
+export function userClient(token?:string){return createClient(secret('SUPABASE_URL'),secret('SUPABASE_ANON_KEY'),{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false},global:token?{headers:{Authorization:`Bearer ${token}`}}:undefined});}
+export function serviceClient(){return createClient(secret('SUPABASE_URL'),secret('SUPABASE_SERVICE_ROLE_KEY'),{auth:{persistSession:false,autoRefreshToken:false}});}
+export async function service<T>(action:string,data:unknown):Promise<T>{const result=await serviceClient().rpc('server_operation',{p_action:action,p_data:data});if(result.error)throw new Error('Não foi possível acessar o serviço seguro.');return result.data as T;}
+export interface Tokens {access_token:string;refresh_token:string;expires_at:number;unit_id:string;user_id:string;}
+export const cookieName=()=>secret('APP_ORIGIN').startsWith('https:')?'__Host-escolinha':'escolinha-dev';
+export function cookie(value:string,clear=false){return `${cookieName()}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${clear?0:60*60*24*7}${secret('APP_ORIGIN').startsWith('https:')?'; Secure':''}`;}
+export async function createSession(tokens:Tokens){const session=randomBytes(32).toString('base64url');await service('session_put',{hash:hash(session),user_id:tokens.user_id,encrypted_tokens:encrypt(tokens),expires_at:new Date(Date.now()+7*86400000).toISOString()});return session;}
+export async function getSession(request:Request){const session=request.headers.get('cookie')?.split(';').map(x=>x.trim()).find(x=>x.startsWith(`${cookieName()}=`))?.slice(cookieName().length+1);if(!session||session.length>100)throw new Error('Entre novamente para continuar.');const record=await service<{encrypted_tokens:string}|null>('session_get',{hash:hash(session)});if(!record)throw new Error('Sua sessão expirou. Entre novamente.');let tokens=decrypt<Tokens>(record.encrypted_tokens);
+ if(tokens.expires_at*1000<Date.now()+60000){const client=userClient();const result=await client.auth.refreshSession({refresh_token:tokens.refresh_token});if(result.error||!result.data.session)throw new Error('Sua sessão expirou. Entre novamente.');tokens={...tokens,access_token:result.data.session.access_token,refresh_token:result.data.session.refresh_token,expires_at:result.data.session.expires_at!};await service('session_put',{hash:hash(session),user_id:tokens.user_id,encrypted_tokens:encrypt(tokens),expires_at:new Date(Date.now()+7*86400000).toISOString()});}
+ const client=userClient(tokens.access_token);const {data,error}=await client.auth.getUser();if(error||data.user?.id!==tokens.user_id)throw new Error('Sessão não autorizada.');return {tokens,client,sessionHash:hash(session)};
+}
