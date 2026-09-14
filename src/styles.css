@@ -9,22 +9,3 @@
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .qr-scanner{margin:10px 0 18px}.qr-scanner video{width:100%;max-height:260px;border-radius:12px;background:#173c2c;margin-bottom:10px}
-
-[data-theme="dark"]{color-scheme:dark;--green:#8fc6a5;--green-dark:#a8d9b8;--muted:#a7b4aa;--border:#33443b;--surface:#1b2721;background:#111914;color:#e1ebe3}
-[data-theme="dark"] body,[data-theme="dark"] .auth-page{background:#111914;color:#e1ebe3}
-[data-theme="dark"] .sidebar,[data-theme="dark"] .topbar,[data-theme="dark"] .panel,[data-theme="dark"] .modal,[data-theme="dark"] .auth-card,[data-theme="dark"] .stat-card,[data-theme="dark"] .qr-card{background:#1b2721;border-color:var(--border);color:#e1ebe3}
-[data-theme="dark"] .topbar{background:#18241e}
-[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#142019;color:#e1ebe3;border-color:#405247}
-[data-theme="dark"] input::placeholder,[data-theme="dark"] textarea::placeholder{color:#89998e}
-[data-theme="dark"] .button.secondary{background:#22342a;color:#c2dcc9;border-color:#4b6655}
-[data-theme="dark"] .button.secondary:hover,[data-theme="dark"] .icon-button:hover{background:#2b4033}
-[data-theme="dark"] .sidebar nav a,[data-theme="dark"] .icon-button,[data-theme="dark"] .user-menu,[data-theme="dark"] .breadcrumb,[data-theme="dark"] .muted,[data-theme="dark"] .page-title p,[data-theme="dark"] .small-note,[data-theme="dark"] .footer,[data-theme="dark"] td{color:#aebdb2}
-[data-theme="dark"] .sidebar nav a:hover,[data-theme="dark"] .sidebar nav a.active{background:#263b2e;color:#bce3c6}
-[data-theme="dark"] .brand{color:#b8dec1}[data-theme="dark"] .brand-icon,[data-theme="dark"] .unit-symbol,[data-theme="dark"] .avatar{background:#2d4836;color:#b9dfc1}
-[data-theme="dark"] .unit-label,[data-theme="dark"] .user-menu,[data-theme="dark"] hr,[data-theme="dark"] fieldset,[data-theme="dark"] th,[data-theme="dark"] td,[data-theme="dark"] .tabs{border-color:#33443b}
-[data-theme="dark"] th,[data-theme="dark"] .panel-foot{background:#17231c;color:#aebdb2}
-[data-theme="dark"] .welcome-banner,[data-theme="dark"] .event-summary,[data-theme="dark"] .help-card,[data-theme="dark"] .form-notice,[data-theme="dark"] .empty>span{background:#213329;border-color:#31493a;color:#c4dec8}
-[data-theme="dark"] .photo-picker{background:#1c3024;border-color:#3c5544}[data-theme="dark"] .photo-preview{background:#2d4936;color:#bddfc3}
-[data-theme="dark"] .care-detail,[data-theme="dark"] .care-detail.neutral,[data-theme="dark"] .call-card blockquote{background:#213329;border-color:#385343;color:#c3d6c7}
-[data-theme="dark"] .badge{background:#29372e;color:#b8c9bb}[data-theme="dark"] .badge-present,[data-theme="dark"] .badge-delivered,[data-theme="dark"] .badge-accepted{background:#294333;color:#acd2b3}
-[data-theme="dark"] .bottom-nav{background:#18241ef5;border-color:#33443b}[data-theme="dark"] .modal::backdrop{background:#020604aa}
