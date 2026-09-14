@@ -11,3 +11,5 @@
 .qr-scanner{margin:10px 0 18px}.qr-scanner video{width:100%;max-height:260px;border-radius:12px;background:#173c2c;margin-bottom:10px}
 
 .install-modal-icon{width:64px;height:64px;display:grid;place-items:center;margin:0 auto 17px;border-radius:18px;background:#eaf2e1;color:#4e704d}.install-steps{display:flex;flex-direction:column;gap:12px;padding-left:24px;color:#52634f;font-size:13px}.install-steps li{padding-left:3px}.install-steps svg{vertical-align:-3px;margin:0 3px;color:#4c674e}
+.ios-install-alert{position:fixed;left:50%;bottom:22px;z-index:55;transform:translateX(-50%);width:min(calc(100vw - 32px),560px);display:flex;align-items:center;gap:16px;padding:14px 16px;background:#fffdf7;border:1px solid #eadfc8;border-radius:14px;box-shadow:0 10px 35px #3c4a3026;color:#5d5038}.ios-install-alert>div{flex:1}.ios-install-alert strong,.ios-install-alert span{display:block}.ios-install-alert strong{font-size:12px}.ios-install-alert span{font-size:11px;margin-top:3px;color:#796b51}.ios-install-alert .button{flex-shrink:0}
+.role-guardian .ios-install-alert{bottom:79px}
