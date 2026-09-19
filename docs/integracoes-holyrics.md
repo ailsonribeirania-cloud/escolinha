@@ -1,8 +1,8 @@
-# Preparação para Holyrics — integração desativada
+# Holyrics — contrato e conector local
 
 ## Limite desta fase
 
-Este documento especifica contrato e modelo. Nenhuma chamada, cliente de rede, token, configuração de servidor ou integração real foi criada. Os tipos abaixo são proposta documental para implementação futura das bases. Fase 7 exige autorização específica e revisão da documentação oficial do Holyrics.
+O conector local foi criado em `holyrics-connector/`, permanece desligado por padrão e não usa a API Online. A migration de projeção está versionada, mas não foi aplicada automaticamente. O guia operacional está em [conector-holyrics-local.md](conector-holyrics-local.md).
 
 ## Separação do fluxo principal
 

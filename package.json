@@ -11,7 +11,11 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "check": "npm run typecheck && npm test && npm run build"
+    "check": "npm run typecheck && npm test && npm run build",
+    "connector:dev": "npm --prefix holyrics-connector run dev",
+    "connector:build": "npm --prefix holyrics-connector run build",
+    "connector:start": "npm --prefix holyrics-connector run start",
+    "connector:test": "npm --prefix holyrics-connector run test"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
