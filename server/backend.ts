@@ -3,7 +3,7 @@ import { randomBytes } from 'node:crypto';
 import { secret, hash, encrypt, decrypt } from './security.js';
 export function userClient(token?:string){return createClient(secret('SUPABASE_URL'),secret('SUPABASE_ANON_KEY'),{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false},global:token?{headers:{Authorization:`Bearer ${token}`}}:undefined});}
 export function serviceClient(){return createClient(secret('SUPABASE_URL'),secret('SUPABASE_SERVICE_ROLE_KEY'),{auth:{persistSession:false,autoRefreshToken:false}});}
-export async function service<T>(action:string,data:unknown):Promise<T>{const result=await serviceClient().rpc('server_operation',{p_action:action,p_data:data});if(result.error)throw new Error('Não foi possível acessar o serviço seguro.');return result.data as T;}
+export async function service<T>(action:string,data:unknown):Promise<T>{const rpc=action.startsWith('event_')?'event_notification_operation':action.startsWith('worship_')?'worship_notification_operation':'server_operation';const result=await serviceClient().rpc(rpc,{p_action:action,p_data:data});if(result.error)throw new Error('Não foi possível acessar o serviço seguro.');return result.data as T;}
 export interface Tokens {access_token:string;refresh_token:string;expires_at:number;unit_id:string;user_id:string;}
 export const cookieName=()=>secret('APP_ORIGIN').startsWith('https:')?'__Host-escolinha':'escolinha-dev';
 export function cookie(value:string,clear=false){return `${cookieName()}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${clear?0:60*60*24*7}${secret('APP_ORIGIN').startsWith('https:')?'; Secure':''}`;}

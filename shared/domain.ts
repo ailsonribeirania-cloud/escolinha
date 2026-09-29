@@ -37,6 +37,8 @@ export const commandSchema = z.discriminatedUnion('type', [
  z.object({type:z.literal('resend_call'),data:z.object({id})}),
  z.object({type:z.literal('incident'),data:z.object({attendance_id:id,category:text,description:z.string().trim().min(5).max(3000),shared:z.boolean().default(false)})}),
  z.object({type:z.literal('checkout'),data:z.object({attendance_id:id,credential:z.string().min(6).max(4096),person_id:id})}),
+ z.object({type:z.literal('staff_checkout'),data:z.object({attendance_id:id})}),
+ z.object({type:z.literal('staff_checkout_all'),data:z.object({event_id:id})}),
  z.object({type:z.literal('save_event'),data:z.object({id:id.optional(),name:text,starts_at:z.string().datetime(),status:z.enum(['open','closed','draft'])})}),
  z.object({type:z.literal('save_class'),data:z.object({id:id.optional(),name:text,room:text,min_months:z.number().int().min(0).max(216),max_months:z.number().int().min(1).max(217),capacity:z.number().int().min(1).max(200),teacher_ids:z.array(id).max(20),color:z.enum(['green','purple','orange','blue']).default('green')}).refine(v=>v.max_months>v.min_months,'Faixa etária inválida.')}),
  z.object({type:z.literal('save_profile'),data:z.object({name:text,phone:z.string().max(25)})}),

@@ -12,7 +12,9 @@ self.addEventListener('fetch',event=>{
  }
 });
 self.addEventListener('push',event=>{
- // No user-controlled sensitive text on a lock screen.
- event.waitUntil(self.registration.showNotification('Escolinha',{body:'A equipe da Escolinha solicita sua presença. Por favor, dirija-se até a recepção.',icon:'/icon-192.png',badge:'/icon-192.png',tag:'escolinha-call',data:{url:'/chamados'}}));
+ // No child or care details are included on a lock screen.
+ let data:{type?:string;title?:string;body?:string}={};try{data=event.data?.json()??{};}catch{/* payload inválido usa mensagem neutra */}
+ const eventStart=data.type==='event_start';
+ event.waitUntil(self.registration.showNotification(eventStart?(data.title??'Novo momento na Escolinha'):'Escolinha',{body:eventStart?(data.body??'Há um novo momento do culto para sua família.'):'A equipe da Escolinha solicita sua presença. Por favor, dirija-se à recepção.',icon:'/icon-192.png',badge:'/icon-192.png',tag:eventStart?'escolinha-album':'escolinha-call',data:{url:eventStart?'/momentos':'/chamados'}}));
 });
-self.addEventListener('notificationclick',event=>{event.notification.close();event.waitUntil((async()=>{const windows=await self.clients.matchAll({type:'window',includeUncontrolled:true});const client=windows.find(c=>new URL(c.url).origin===self.location.origin) as WindowClient|undefined;if(client){await client.navigate('/chamados');await client.focus();}else await self.clients.openWindow('/chamados');})());});
+self.addEventListener('notificationclick',event=>{const url=String(event.notification.data?.url??'/');event.notification.close();event.waitUntil((async()=>{const windows=await self.clients.matchAll({type:'window',includeUncontrolled:true});const client=windows.find(c=>new URL(c.url).origin===self.location.origin) as WindowClient|undefined;if(client){await client.navigate(url);await client.focus();}else await self.clients.openWindow(url);})());});

@@ -24,7 +24,7 @@ begin
   select * into person from public.authorized_people where id=(d->>'id')::uuid and unit_id=p_unit for update;perform private.assert(found and private.guardian(p_unit,person.child_id,'manage'),'Sem permissão.');update public.authorized_people set active=false,revoked_at=now() where id=person.id;rid:=person.id;
  elsif kind='check_in' then
   select * into c from public.children where id=(d->>'child_id')::uuid and unit_id=p_unit for update;
-  perform private.assert(found and c.active and (private.guardian(p_unit,c.id,'checkin') or private.admin(p_unit)),'Criança indisponível ou sem permissão.');
+  perform private.assert(found and c.active and (private.guardian(p_unit,c.id,'checkin') or private.admin(p_unit) or private.teacher(p_unit,(d->>'class_id')::uuid)),'Criança indisponível ou sem permissão.');
   select * into ev from public.events where id=(d->>'event_id')::uuid and unit_id=p_unit for update;perform private.assert(found and ev.status='open','Evento não está aberto.');
   select * into r from public.classes where id=(d->>'class_id')::uuid and unit_id=p_unit for update;perform private.assert(found and r.active,'Turma indisponível.');
   months:=extract(year from age((ev.starts_at at time zone (select timezone from public.units where id=p_unit))::date,c.birth_date))::int*12+extract(month from age((ev.starts_at at time zone (select timezone from public.units where id=p_unit))::date,c.birth_date))::int;

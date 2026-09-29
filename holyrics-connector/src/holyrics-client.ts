@@ -17,9 +17,12 @@ export class HolyricsClient {
   private async request(action: string, body: unknown): Promise<HolyricsResult> {
     try {
       const response = await this.transport(this.url(action), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(this.config.holyricsTimeout), redirect: 'error' });
-      const data = await response.json().catch(() => null) as { status?: string; error?: { key?: string; message?: string }; data?: { display_id?: string } } | null;
-      if (data?.error?.key === 'device_disconnected') return { ok: false, kind: 'disconnected', message: 'Holyrics desconectado.' };
-      if (data?.error?.key === 'invalid_token' || data?.error?.message?.toLowerCase().includes('invalid token')) return { ok: false, kind: 'invalid_token', message: 'Token do Holyrics inválido.' };
+      const data = await response.json().catch(() => null) as { status?: string; error?: string | { key?: string; message?: string }; data?: { display_id?: string } } | null;
+      const errorKey = typeof data?.error === 'object' ? data.error?.key : undefined;
+      const errorMessage = typeof data?.error === 'string' ? data.error : data?.error?.message;
+      const normalizedError = `${errorKey || ''} ${errorMessage || ''}`.toLowerCase();
+      if (normalizedError.includes('device_disconnected')) return { ok: false, kind: 'disconnected', message: 'Holyrics desconectado.' };
+      if (normalizedError.includes('invalid_token') || normalizedError.includes('invalid token')) return { ok: false, kind: 'invalid_token', message: 'Token do Holyrics inválido.' };
       if (!response.ok || data?.status !== 'ok') return { ok: false, kind: 'rejected', message: 'Holyrics rejeitou a requisição.' };
       return { ok: true, mock: false, displayId: data.data?.display_id };
     } catch (error) {

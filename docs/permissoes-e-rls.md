@@ -15,7 +15,7 @@ RLS será habilitada em todas as tabelas expostas, acompanhada de grants mínimo
 | Cuidados especiais | Criança sob gestão | Apenas durante atendimento autorizado | Permissão específica de cuidado; papel administrativo sozinho não basta |
 | Pessoas autorizadas | Gerenciar para criança sob gestão | Consultar durante retirada autorizada | Gestão na unidade com auditoria |
 | Eventos e turmas | Ler opções publicadas da unidade | Ler eventos/turmas atribuídos | Criar, editar, abrir, encerrar |
-| Check-in | Solicitar para vínculo com `pode_checkin` | Confirmar recebimento na turma | Consultar e executar exceções permitidas |
+| Check-in | Solicitar para vínculo com `pode_checkin` | Solicitar e confirmar recebimento na turma atribuída | Consultar e executar exceções permitidas |
 | Presentes | Apenas crianças vinculadas | Apenas turmas atribuídas | Unidade inteira |
 | Chamados | Ler os destinados a si; responder | Criar/acompanhar na turma | Consultar na unidade conforme permissão |
 | Ocorrências | Somente conteúdo explicitamente compartilhado com o vínculo autorizado | Criar/consultar conforme atribuição e validade | Permissão específica para detalhes restritos |
