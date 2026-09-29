@@ -8,7 +8,7 @@ begin
    $new$ elsif p_action='delete_album' then
   select * into a from public.worship_albums where id=(p_data->>'id')::uuid and unit_id=p_unit for update;
   perform private.assert(found and private.worship_admin(p_unit),'Somente administradores podem apagar álbuns.');
-  delete from public.worship_comment_reports where comment_id in(select id from public.worship_photo_comments where album_id=a.id);
+  delete from public.worship_comment_reports where comment_id in(select id from public.worship_photo_comments where photo_id in(select id from public.worship_photos where album_id=a.id));
   delete from public.worship_photo_likes where photo_id in(select id from public.worship_photos where album_id=a.id);
   delete from public.worship_photo_comments where photo_id in(select id from public.worship_photos where album_id=a.id);
   delete from private.worship_notification_jobs where album_id=a.id;
